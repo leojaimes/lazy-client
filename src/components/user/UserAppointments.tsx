@@ -12,9 +12,9 @@ import {
 import dayjs from 'dayjs';
 import { ReactElement } from 'react';
 import { ImCancelCircle } from 'react-icons/im';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
-import type { Appointment } from '../../../../shared/types';
+import type { Appointment } from '../../shared/types';
 import { useCancelAppointment } from '../appointments/hooks/useCancelAppointment';
 import { useUser } from './hooks/useUser';
 import { useUserAppointments } from './hooks/useUserAppointments';

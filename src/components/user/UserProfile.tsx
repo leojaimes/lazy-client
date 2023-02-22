@@ -22,7 +22,7 @@ export function UserProfile(): ReactElement {
   const patchUser = usePatchUser();
 
   if (!user) {
-    return <Navigate to="/signin" />; // {/*<Redirect to="/signin" />;*/}
+    return <Navigate to="/signin" />;
   }
 
   const formElements = ['name', 'address', 'phone'];
