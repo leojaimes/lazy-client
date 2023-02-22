@@ -44,7 +44,7 @@ export function Calendar(): ReactElement {
           position="absolute"
           right="10px"
           checked={!showAll}
-          defaultIsChecked
+          defaultChecked
           onChange={() => setShowAll((prevValue) => !prevValue)}
         >
           Only show available
@@ -60,8 +60,12 @@ export function Calendar(): ReactElement {
         {/* the rest of the days will follow */}
         {[...Array(monthYear.lastDate)].map((_, i) =>
           i > 0 ? (
-            <DateBox key={i} date={i + 1} appointments={appointments[i + 1]} />
-          ) : null,
+            <DateBox
+              key={`${i}-index`}
+              date={i + 1}
+              appointments={appointments[i + 1]}
+            />
+          ) : null
         )}
       </Grid>
       <UserAppointments />

@@ -1,4 +1,3 @@
-// eslint-disable-next-line prettier/prettier
 import { createStandaloneToast } from '@chakra-ui/react';
 import { QueryClient } from '@tanstack/react-query';
 

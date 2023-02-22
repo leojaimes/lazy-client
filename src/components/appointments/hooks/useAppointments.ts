@@ -1,9 +1,8 @@
-// @ts-nocheck
 import dayjs from 'dayjs';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import { axiosInstance } from '../../../axiosInstance';
-import { queryKeys } from '../../../react-query/constants';
+// import { queryKeys } from '../../../react-query/queryClient';
 import { useUser } from '../../user/hooks/useUser';
 import { AppointmentDateMap } from '../types';
 import { getAvailableAppointments } from '../utils';
@@ -12,7 +11,7 @@ import { getMonthYearDetails, getNewMonthYear, MonthYear } from './monthYear';
 // for useQuery call
 async function getAppointments(
   year: string,
-  month: string,
+  month: string
 ): Promise<AppointmentDateMap> {
   const { data } = await axiosInstance.get(`/appointments/${year}/${month}`);
   return data;
