@@ -15,20 +15,22 @@ async function getTreatments(): Promise<Treatment[]> {
 
 export function useTreatments(): Treatment[] | undefined {
   // TODO: get data from server via useQuery
-  const toast = useCustomToast();
+  // const toast = useCustomToast();
   const { data } = useQuery({
     queryKey: [queryKeys.treatments],
     queryFn: () => getTreatments(),
-    onError: (error) => {
-      const title =
-        error instanceof Error
-          ? error.message
-          : 'Error connection to the server';
-      toast({
-        title,
-        status: 'error',
-      });
-    },
+    // onError: (error) => {
+    //   const title =
+    //     error instanceof Error
+    //       ? error.message
+    //       : 'Error connection to the server';
+    //   toast({
+    //     title,
+    //     status: 'error',
+    //   });
+    // },
+    // Se remouve la funcion error ya que está siendo enviada desde la constante queryClient de react-query > queryCliente
+    // la variable queryClient está siendo importada en App.tsx de components > app > App.tsx
   });
   return data;
 }
