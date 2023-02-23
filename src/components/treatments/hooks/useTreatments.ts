@@ -29,7 +29,7 @@ export function useTreatments(): Treatment[] | undefined {
     //     status: 'error',
     //   });
     // },
-    // Se remouve la funcion error ya que está siendo enviada desde la constante queryClient de react-query > queryCliente
+    // Se remouve la funcion error: onError ya que está siendo enviada desde la constante queryClient de react-query > queryCliente
     // la variable queryClient está siendo importada en App.tsx de components > app > App.tsx
   });
   return data;
