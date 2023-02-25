@@ -1,7 +1,13 @@
 import dayjs from 'dayjs';
-import { Dispatch, SetStateAction, useState } from 'react';
+import {
+ Dispatch,
+ SetStateAction,
+ useEffect,
+ useState,
+ useCallback,
+} from 'react';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { axiosInstance } from '../../../axiosInstance';
 // import { queryKeys } from '../../../react-query/queryClient';
 import { useUser } from '../../user/hooks/useUser';
@@ -9,6 +15,7 @@ import { AppointmentDateMap } from '../types';
 import { getAvailableAppointments } from '../utils';
 import { getMonthYearDetails, getNewMonthYear, MonthYear } from './monthYear';
 import { queryKeys } from '../../../react-query/constants';
+import { usePrefetchTreatments } from '../../treatments/hooks/useTreatments';
 
 // for useQuery call
 async function getAppointments(
@@ -60,6 +67,19 @@ export function useAppointments(): UseAppointments {
  //   appointments that the logged-in user has reserved (in white)
  const { user } = useUser();
 
+ const selectFn = (data: AppointmentDateMap) =>
+  getAvailableAppointments(data, user);
+ ///
+ const queryClient = useQueryClient();
+ useEffect(() => {
+  const nextMonthYear = getNewMonthYear(monthYear, 1);
+  queryClient.prefetchQuery({
+   queryKey: [queryKeys.appointments, nextMonthYear.year, nextMonthYear.month],
+   queryFn: () => getAppointments(nextMonthYear.year, nextMonthYear.month),
+  });
+  return () => {};
+ }, [queryClient, monthYear]); // either when queryClient is called or when monthyear chang the useEffect is activated
+
  /** ****************** END 2: filter appointments  ******************** */
  /** ****************** START 3: useQuery  ***************************** */
  // useQuery call for appointments for the current monthYear
@@ -73,8 +93,9 @@ export function useAppointments(): UseAppointments {
  //       monthYear.month
  const fallback = {};
  const { data: appointments = fallback } = useQuery({
-  queryKey: [queryKeys.appointments],
+  queryKey: [queryKeys.appointments, monthYear.year, monthYear.month],
   queryFn: () => getAppointments(monthYear.year, monthYear.month),
+  select: showAll ? undefined : selectFn,
  });
 
  /** ****************** END 3: useQuery  ******************************* */
