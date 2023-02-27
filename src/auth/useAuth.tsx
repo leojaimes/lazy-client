@@ -47,6 +47,8 @@ export function useAuth(): UseAuth {
         });
 
         // update stored user data
+        console.log('authServerCall');
+        console.log(data.user);
         updateUser(data.user);
       }
     } catch (errorResponse) {
