@@ -14,7 +14,6 @@ import {
 
 // query function
 async function getUser(user: User | null): Promise<User | null> {
-  console.log('getUser');
   if (!user) return null;
   const { data }: AxiosResponse<{ user: User }> = await axiosInstance.get(
     `/user/${user.id}`,
@@ -36,7 +35,7 @@ export function useUser(): UseUser {
   const queryClient = useQueryClient();
   const { data: user } = useQuery({
     queryKey: [queryKeys.user],
-    queryFn: () => getUser(user),
+    // queryFn: () => getUser(user),
     // populate initially with user in localStorage
     initialData: getStoredUser,
   });
