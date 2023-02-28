@@ -56,6 +56,7 @@ export function useUser(): UseUser {
   // meant to be called from useAuth
   function clearUser() {
     queryClient.setQueryData([queryKeys.user], null);
+    queryClient.removeQueries({ queryKey: ['user-appointments'], exact: true });
   }
 
   return { user, updateUser, clearUser };
