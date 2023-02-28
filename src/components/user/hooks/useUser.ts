@@ -13,12 +13,16 @@ import {
 } from '../../../user-storage';
 
 // query function
-async function getUser(user: User | null): Promise<User | null> {
+async function getUser(
+  user: User | null,
+  signal: AbortSignal
+): Promise<User | null> {
   if (!user) return null;
   const { data }: AxiosResponse<{ user: User }> = await axiosInstance.get(
     `/user/${user.id}`,
     {
       headers: getJWTHeader(user),
+      signal,
     }
   );
 
@@ -35,6 +39,7 @@ export function useUser(): UseUser {
   const queryClient = useQueryClient();
   const { data: user } = useQuery({
     queryKey: [queryKeys.user],
+    queryFn: getStoredUser, // ({ signal }) => getUser(user, signal!),
     // queryFn: () => getUser(user),
     // populate initially with user in localStorage
     initialData: getStoredUser,

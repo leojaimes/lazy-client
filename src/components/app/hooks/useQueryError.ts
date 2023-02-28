@@ -6,6 +6,7 @@ export function useQueryError(): (error: unknown) => void {
   const toast = useCustomToast();
 
   function queryErrorToast(error: unknown) {
+    console.log(error);
     const title =
       typeof error === 'string' ? error : 'error connecting to server';
     toast({ title, status: 'error' });
